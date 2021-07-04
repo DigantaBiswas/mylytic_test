@@ -1,0 +1,8 @@
+{% extends "base/base.html" %}
+{% block content %}
+    <div class="col-lg-3">
+            {% for data in object_list %}
+                 <a href="{% url 'order-detail' data.id %}" class="list-group-item list-group-item-action">{{ data.customer_name }} , Created at: {{ data.created_at }}</a>
+            {% endfor %}
+    </div>
+{% endblock %}

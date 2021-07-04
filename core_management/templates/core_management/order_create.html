@@ -1,0 +1,71 @@
+{% extends "base/base.html" %}
+{% block content %}
+    <form>
+        <div class="col-lg-3">
+            <input class="form-control" id="name" type="text" placeholder="Name" required>
+        <br>
+            <input class="form-control" id="phone" type="text" placeholder="Number" required>
+             <br>
+            <div class="form-group">
+                <input id="email" type="email" class="form-control" aria-describedby="emailHelp"
+                       placeholder="Enter email" required>
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                    else.</small>
+            </div>
+
+            {% for product in products %}
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text product" data-product="{{ product.id }}">Product name:  {{ product.name }}</span>
+                    </div>
+                    <input type="text" class="form-control quantity" value="0" data-product="{{ product.id }}">
+                </div>
+                     <br>
+            {% endfor %}
+
+        </div>
+    </form>
+         <br>
+    <div class="col-lg-3">
+    <button class="btn btn-primary " id="btnSubmit">Order</button>
+    </div>
+
+
+
+    <script>
+        let order_dict = {}
+        //order list is a dict where key is product id and value is quantity
+        $('.quantity').on('change', function () {
+            let product = $(this).data("product")
+            let quantity = $(this).val()
+            dictBuilder(product, quantity)
+        });
+
+        function dictBuilder(product, quantity) {
+            order_dict[product] = quantity
+        }
+
+
+        $("#btnSubmit").click(function () {
+            let name =$('#name').val();
+            let phone =$('#phone').val();
+            let email =$('#email').val();
+            $.ajax({
+                url: '/',
+                type: 'POST',
+                data:  {'data': JSON.stringify({'orders': order_dict, 'name': name, 'email': email, 'phone': phone})},
+                dataType: 'json',
+                success: function (data) {
+                    alert("success")
+                },
+               error: function(data){
+               alert(data.responseJSON.error);
+               }
+            });
+        });
+
+
+
+    </script>
+{% endblock %}
+

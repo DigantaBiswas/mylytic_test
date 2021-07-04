@@ -1,0 +1,72 @@
+{% extends "base/base.html" %}
+{% load mathfilters %}
+{% block content %}
+    <div class="col-lg-3">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">Serial</th>
+                <th scope="col">Item</th>
+                <th scope="col">Unit Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for cart in carts %}
+                <tr>
+                    {#                <th scope="row">1</th>#}
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ cart.product.name }}</td>
+                    <td>{{ cart.product.unit_price }}</td>
+                    <td>{{ cart.quantity }}</td>
+                    <td class="total-amount">{{ cart.quantity|mul:cart.product.unit_price }}</td>
+                </tr>
+            {% endfor %}
+
+            <tr>
+                {#                <th scope="row">3</th>#}
+                <td colspan="4">Total</td>
+                <td id="gross-total"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p hidden id="#cinfo">{{ order.customer_name }} {{ order.customer_email }} {{ order.customer_phone }}<p>
+
+        <canvas id="qr-code"></canvas>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            var sum = 0;
+            $('.total-amount').each(function () {
+                sum += parseFloat($(this).text());  // Or this.innerHTML, this.innerText
+            });
+            $('#gross-total').html(sum)
+
+            var cinfo = $('p').text().trim()
+            var qr;
+            (function () {
+                qr = new QRious({
+                    element: document.getElementById('qr-code'),
+                    size: 200,
+                    value: cinfo
+                });
+            })();
+
+        })
+    </script>
+
+    <style>
+        #qr-text {
+            padding: 5px;
+            background-color: transparent;
+            border: none;
+            border-bottom: solid 4px #8c52ff;
+            width: 250px;
+            font-size: 16px;
+        }
+    </style>
+{% endblock %}
