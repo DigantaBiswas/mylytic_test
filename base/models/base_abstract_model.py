@@ -19,6 +19,6 @@ class BaseAbstractModel(models.Model):
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''
         if not self.id:
-            self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+            self.created_at = datetime.now(tz=timezone.utc)
+        self.updated_at = datetime.now(tz=timezone.utc)
         return super(BaseAbstractModel, self).save(*args, **kwargs)

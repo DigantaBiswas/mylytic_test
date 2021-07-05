@@ -24,3 +24,7 @@ class Product(BaseAbstractModel):
 
     def get_absolute_url(self):
         return reverse('product-list')
+
+    def update_stock_after_order(self, quantity):
+        self.stock_in_units = self.stock_in_units - quantity
+        self.save()
