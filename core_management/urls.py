@@ -13,7 +13,7 @@ from core_management.views.product.product_list_view import ProductListView
 urlpatterns = [
     path('product-list', ProductListView.as_view(), name='product-list'),
     path('product-create', ProductCreateView.as_view(), name='product-create'),
-    path('product-edit', ProductUpdateView.as_view(), name='product-edit'),
+    path('product-edit/<pk>', ProductUpdateView.as_view(), name='product-edit'),
     path('product-delete/<pk>/', ProductDeleteView.as_view(), name='product-delete'),
     path('category-create', CategoryCreateView.as_view(), name='category-create'),
 

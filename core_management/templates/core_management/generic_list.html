@@ -19,7 +19,11 @@
                             </span>
                         </a>
 
-                        <span class="badge badge-primary badge-pill"><i class="fas fa-edit"></i></span>
+                        <a href="{% url 'product-edit' product.id %}">
+                            <span class="badge badge-primary badge-pill">
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                        </a>
                     </li>
                 {% endfor %}
             </ul>
