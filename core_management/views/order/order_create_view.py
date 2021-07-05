@@ -33,6 +33,7 @@ class OrderCreateView(View):
         customer_name = data.get("name")
         customer_phone = data.get("phone")
         customer_email = data.get("email")
+
         products = Product.objects.all().values('id', 'stock_in_units', 'name')
         product_id_pk_dict = {}
         for item in products:
