@@ -1,7 +1,7 @@
 {% extends "base/base.html" %}
 {% load mathfilters %}
 {% block content %}
-    <div class="col-lg-3">
+    <div class="col-lg-3" id="pdf">
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -33,9 +33,12 @@
             </tbody>
         </table>
 
-        <p hidden id="#cinfo">{{ order.customer_name }} {{ order.customer_email }} {{ order.customer_phone }}<p>
+        <p hidden id="#cinfo">{{ order.customer_name }} {{ order.customer_email }} {{ order.customer_phone }}
+        <p>
 
-        <canvas id="qr-code"></canvas>
+            <canvas id="qr-code"></canvas>
+            <br>
+            <button class="btn btn-primary" id="btn-pdf" onclick="printPdf()">Print invoice</button>
     </div>
 
     <script>
@@ -56,7 +59,14 @@
                 });
             })();
 
+
         })
+
+        function printPdf() {
+            $("#btn-pdf").hide()
+            window.print()
+            $("#btn-pdf").show()
+        }
     </script>
 
     <style>
